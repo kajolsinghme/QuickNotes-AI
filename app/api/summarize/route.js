@@ -37,7 +37,7 @@ export async function POST(req) {
     console.log("STATUS:", response.status);
     console.log("DATA:", data);
     if (!response.ok) {
-      console.error(data);
+      console.log(data);
       return Response.json({ error: "AI API failed" }, { status: 500 });
     }
 
@@ -47,7 +47,7 @@ export async function POST(req) {
       summary,
     });
   } catch (error) {
-    console.error(error);
+    console.log(error);
     return Response.json({ error: "Something went wrong" }, { status: 500 });
   }
 }
