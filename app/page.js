@@ -1,17 +1,16 @@
 "use client";
 import { useState } from "react";
 import axios from "axios";
+import { toast } from "sonner";
 
 export default function Home() {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState("");
-  const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
 
   const handleChange = (e) => {
     setText(e.target.value);
-    setError("");
   };
 
   const handleSummarize = async () => {
@@ -19,13 +18,12 @@ export default function Home() {
 
     try {
       setLoading(true);
-      setError("");
       const res = await axios.post("api/summarize", { text });
       setResult(res.data.summary);
+      toast.success("Summary generated successfully!");
     } catch (error) {
       console.log(error);
-      setError(error.response?.data?.error || "Something went wrong");
-      setResult("Something went wrong");
+      toast.error(error.response?.data?.error || "Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -35,12 +33,12 @@ export default function Home() {
     navigator.clipboard.writeText(result);
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
+    toast("Copied to clipboard!");
   };
 
   const handleClear = () => {
     setText("");
     setResult("");
-    setError("");
   };
 
   return (
@@ -77,8 +75,6 @@ export default function Home() {
         >
           {loading ? "Summarizing..." : "Summarize"}
         </button>
-
-        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
         {result && (
           <div className="bg-white border border-gray-200 rounded-xl p-4 space-y-3 shadow-sm">

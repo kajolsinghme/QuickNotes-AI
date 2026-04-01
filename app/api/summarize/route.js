@@ -4,14 +4,13 @@ export async function POST(req) {
     if (!text) {
       return Response.json({ error: "No text provided" }, { status: 400 });
     }
-    if (text.length > 1000){
-      if (text.length > 1000) {
+    if (text.length > 1000) {
   return Response.json(
-    { error: "Text too long (max ~150-200 words)" },
+    { error: `Oops! Your text is too long. Please keep it under 1000 characters.` },
     { status: 400 }
   );
 }
-    }
+
     const response = await fetch(
       "https://openrouter.ai/api/v1/chat/completions",
       {
@@ -27,7 +26,7 @@ export async function POST(req) {
           messages: [
             {
               role: "user",
-              content: `Summarize the following text in 3-4 concise bullet points:\n${text}`,
+              content: `Summarize the following text in a concise paragraph:\n${text}`,
             },
           ],
         }),
