@@ -63,9 +63,7 @@ http://localhost:4000
 
 ## Deployment
 
-Deploy instantly using:
-
-* [Vercel](https://vercel.com?utm_source=chatgpt.com)
+* [Vercel](https://quick-notes-ai.vercel.app/)
 
 ---
 
